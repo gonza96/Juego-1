@@ -42,12 +42,14 @@ imagen_proyectil = pygame.image.load("Imagenes/explosion5.png")
 imagen_proyectil.set_colorkey(BLANCO)
 
 imagen_alien = pygame.image.load("imagenes/alien.png")
-cant_alien = 8
+cant_alien = 15
 ancho_imagen = imagen_alien.get_width()
 
 siguiente = False
 cont = 0
 ciclos = 0
+cantMov = 0
+contador2 = 0
 
 # Definicion de clases y funciones
 
@@ -136,14 +138,14 @@ class Alien(pygame.sprite.Sprite):
 
     # Desplaza los aliens hacia la izquierda y hacia la derecha
     def mover_alien(self, lista_alien, ciclos):
-        #print("mover aliens")
+            
         if len(lista_alien) > 0:
             for i in range(len(lista_alien)):
                 if ciclos == 1:
-                    lista_alien[i][0] += 15
-                if ciclos == 0:
                     lista_alien[i][0] -= 15
-                
+                if ciclos == 0:
+                    lista_alien[i][0] += 15
+                    
 # Coprueba si hay colisiones entre los proyectiles y los aliens
 def Colisiones(lista_alien, lista_proyectil, ancho_imagen):
     
@@ -157,7 +159,6 @@ def Colisiones(lista_alien, lista_proyectil, ancho_imagen):
                     if lista_alien[i][0] + s == lista_proyectil[j][0] and lista_proyectil[j][1] <= lista_alien[i][1] :
                         del lista_alien[i]
                         del lista_proyectil[j]
-                        #print("Borro!!!")
                         borro = True
                         break
                     s = s + 0.25
@@ -206,10 +207,6 @@ while not hecho:
             #sonido_click.play()
             pos_disparo = (jugador1.rect.x + (jugador1.image.get_width() / 2) - (proyectiles.image.get_width() / 2))
             proyectiles.nuevo_disparo(pos_disparo, jugador1.rect.y)
-            
-    # Actualiza la posición x,y del jugador y lo dibuja en pantalla
-    jugador1.actualizar_pos(velocidad, teclas) 
-    jugador1.dibujar(pantalla)
 
     # Dibuja en pantalla los proyectiles disparados
     if len(lista_proyectil) != 0:
@@ -231,26 +228,44 @@ while not hecho:
     estrellas.actualizar_pos(lista_estrella, pantalla)
     proyectiles.mover_proyectil(largo_lista_proy)
 
-    # Si se destruyen todos los aliens agrega 8 más
+    # Si se destruyen todos los aliens agrega más
     if len(lista_alien) == 0:
         iniciar_aliens()
-        cant_alien += 8
+        cant_alien += 7
         siguiente = True
 
-    # Cada 25 ciclos (cont) desplaza los aliens
-    if ciclos == 0 and cont == 25:
+    # Desplaza los aliens
+    if ciclos == 0 and cont == 10:
         otra_variable.mover_alien(lista_alien, ciclos)
         cont = 0
-        ciclos = 1
-    if ciclos == 1 and cont == 25:
+    if ciclos == 1 and cont == 10:
         otra_variable.mover_alien(lista_alien, ciclos)
         cont = 0
-        ciclos = 0
-    cont += 1
+        
+    if contador2 == 20 and ciclos == 0:
+        cantMov += 1
+        contador2 = 0
+        if cantMov == 3:
+            cantMov = 0
+            ciclos = 1
 
+    if contador2 == 20 and ciclos == 1:
+        cantMov += 1
+        contador2 = 0
+        if cantMov == 3:
+            cantMov = 0
+            ciclos = 0
+            
+    cont += 1
+    contador2 += 1
+
+    # Actualiza la posición x,y del jugador y lo dibuja en pantalla
+    jugador1.actualizar_pos(velocidad, teclas) 
+    jugador1.dibujar(pantalla)
+    
     # Imprime en pantalla todos los gráficos
     pygame.display.flip()
 
-    reloj.tick(60)
+    reloj.tick(75)
     
 pygame.quit()
