@@ -2,7 +2,7 @@ import pygame
 
 lista_alien = []
 
-# Función para mover los aliens
+# Función para mover los aliens en el eje x
 def mover_alien(lista_alien, ciclos):
             
     if len(lista_alien) > 0:
@@ -11,6 +11,12 @@ def mover_alien(lista_alien, ciclos):
                 lista_alien[i][0] -= 1
             if ciclos == 0:
                 lista_alien[i][0] += 1
+
+# Función para mover los aliens hacia el jugador
+def mover_alien_y(lista_alien):
+    if len(lista_alien) > 0:
+        for i in range(len(lista_alien)):
+            lista_alien[i][1] += 1
                     
 # Coprueba si hay colisiones entre los proyectiles y los aliens
 def Colisiones(lista_alien, lista_proyectil, ancho_imagen, puntos):

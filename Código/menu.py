@@ -2,8 +2,6 @@ import pygame
 from main import *
 
 class Menu:
-    "Representa un menú con opciones para un juego"
-    
     def __init__(self, opciones):
         self.opciones = opciones
         self.font = pygame.font.Font(None, 50)
@@ -12,8 +10,6 @@ class Menu:
         self.mantiene_pulsado = False
 
     def actualizar(self):
-        """Altera el valor de 'self.seleccionado' con los direccionales."""
-
         k = pygame.key.get_pressed()
 
         if not self.mantiene_pulsado:
@@ -39,8 +35,6 @@ class Menu:
 
 
     def imprimir(self, pantalla):
-        """Imprime sobre 'screen' el texto de cada opción del menú."""
-
         total = self.total
         indice = 0
         altura_de_opcion = 50
@@ -57,16 +51,9 @@ class Menu:
             posicion = (x, y + altura_de_opcion * indice)
             indice += 1
             pantalla.blit(imagen, posicion)
-
-
-def comenzar_nuevo_juego():
-
-    texto = fuente.render("Ingrese nombre:", 1, (BLANCO))
-    pantalla.blit(texto, (pantalla.get_width() / 2 - 100, pantalla.get_height() / 2 - 50))
-    pygame.display.flip()
-    teclas = pygame.key.get_pressed()
-    nombre = str(teclas)
     
+def comenzar_nuevo_juego():
+    nombre = ""
     jugar(cant_alien, nombre)
 
 def dificultad():
@@ -106,18 +93,20 @@ def creditos():
     
     volver = False
     creditos_juego = fuente3.render("Agregar créditos...", 1, (BLANCO))
+    rect_creditos = creditos_juego.get_rect()
+    rect_creditos.centerx = pantalla.get_rect().centerx
+    rect_creditos.centery = pantalla.get_rect().centery
     while not volver:
         teclas = pygame.key.get_pressed()
         for evento in pygame.event.get():
             if evento.type == pygame.QUIT or teclas[pygame.K_q]:
                 volver = True
 
-        pantalla.blit(creditos_juego, (pantalla.get_width() / 2 - 210, pantalla.get_height() / 2 - 18))
+        pantalla.blit(creditos_juego, (rect_creditos))
         
         pygame.display.flip()
         pygame.time.delay(10)
-    
-    
+
 def salir_del_programa():
     import sys
     print ("Gracias por utilizar este programa.")
@@ -126,8 +115,10 @@ def salir_del_programa():
 
 
 if __name__ == '__main__':
-    
+       
     salir = False
+    iniciado = False
+
     opciones = [
         ("Nuevo juego", comenzar_nuevo_juego),
         ("Cargar partida", cargar_partida),
@@ -135,16 +126,17 @@ if __name__ == '__main__':
         ("Creditos", creditos),
         ("Salir", salir_del_programa)
         ]
-    
+        
     menu = Menu(opciones)
-
+    
     while not salir:
-
+        teclado = pygame.key.get_pressed()
         for e in pygame.event.get():
-            if e.type == pygame.QUIT:
-                salir = True
+            if e.type == pygame.QUIT or teclado[pygame.K_q]:
+                salir_del_programa()
 
         pantalla.blit(imagen_fondo, (0, 0))
+        
         menu.actualizar()
         menu.imprimir(pantalla)
 

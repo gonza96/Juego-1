@@ -47,6 +47,7 @@ imagen_proyectil.set_colorkey(BLANCO)
 imagen_alien = pygame.image.load("imagenes/alien.png")
 cant_alien = 73
 ancho_imagen = imagen_alien.get_width()
+rect_alien = imagen_alien.get_rect()
 
 # Inicializa Jugador, estrellas, aliens y proyectiles
 estrellas = Estrellas(pantalla)
@@ -62,6 +63,7 @@ def jugar(cant_alien, nombre):
     ciclos = 0
     cantMov = 0
     puntos = 0
+    cont = 0
     
     while not hecho:
 
@@ -120,12 +122,19 @@ def jugar(cant_alien, nombre):
                 cantMov = 0
                 ciclos = 0
 
+        cont += 1
+        if cont == 120:
+            mover_alien_y(lista_alien)
+            cont = 0
+            
         # Actualiza la posición x,y del jugador y lo dibuja en pantalla
         jugador1.actualizar_pos(velocidad, teclas, pantalla) 
         jugador1.dibujar(pantalla)
+        jugador1.colision_alien(lista_alien, pantalla)
 
         # Nombre y puntuación en pantalla
         if(puntos != 0): print(puntos)
+        nombre = "Jugador"
         nombre_puntos = fuente2.render(nombre+" Puntos: "+ str(puntos), 1, (BLANCO))
         pantalla.blit(nombre_puntos, (0, 0))
         
