@@ -4,7 +4,7 @@ from main import *
 class Menu:
 	def __init__(self, opciones):
 		self.opciones = opciones
-		self.font = pygame.font.Font(None, 50)
+		self.font = pygame.font.Font("Fuente/PressStart2P-Regular.ttf", 23)
 		self.seleccionado = 0
 		self.total = len(self.opciones)
 		self.mantiene_pulsado = False
@@ -37,8 +37,8 @@ class Menu:
 	def imprimir(self, pantalla):
 		total = self.total
 		indice = 0
-		altura_de_opcion = 50
-		x = pantalla.get_width() / 2 - 100
+		altura_de_opcion = 35
+		x = pantalla.get_width() / 2 - 120
 		y = pantalla.get_height() / 2 - 100
 		
 		for (titulo, funcion) in self.opciones:
@@ -54,13 +54,13 @@ class Menu:
 	
 def comenzar_nuevo_juego():
 	nombre = ""
-	jugar(cant_alien, nombre, puntos)
+	jugar(cant_alien, nombre)
 
 def dificultad():
 	pass
 
 def guardar():
-	pass
+        pass
 
 def mostrar_opciones():
 

@@ -1,5 +1,4 @@
 import pygame
-from puntos import *
 
 lista_proyectil = []
 velocidad_proyectil = 10

@@ -3,7 +3,6 @@
 #
 
 import pygame
-import random
 from jugador import *
 from estrellas import *
 from proyectiles import *
@@ -23,9 +22,9 @@ AZUL = (0, 250, 255)
 pantalla = pygame.display.set_mode([800, 600])
 pygame.display.set_caption("Algo del espacio")
 pygame.mouse.set_visible(0)
-fuente = pygame.font.Font(None, 36)
-fuente2 = pygame.font.Font(None, 20)
-fuente3 = pygame.font.Font(None, 35)
+fuente = pygame.font.Font("Fuente/PressStart2P-Regular.ttf", 36)
+fuente2 = pygame.font.Font("Fuente/PressStart2P-Regular.ttf", 12)
+fuente3 = pygame.font.Font("Fuente/PressStart2P-Regular.ttf", 35)
 
 sonido_click = pygame.mixer.Sound("Sonidos/laser5.ogg")
 
@@ -37,11 +36,12 @@ vel_y = 0
 velocidad = 3
 
 imagen_fondo = pygame.image.load("Imagenes/FondoNegro.png")
+imagen_ayuda = pygame.image.load("Imagenes/teclas.png")
 
-imagen_jugador = pygame.image.load("Imagenes/nave2.png")
+imagen_jugador = pygame.image.load("Imagenes/nave.png")
 imagen_jugador.set_colorkey(BLANCO)
 
-imagen_proyectil = pygame.image.load("Imagenes/explosion5.png")
+imagen_proyectil = pygame.image.load("Imagenes/explosion.png")
 imagen_proyectil.set_colorkey(BLANCO)
 
 imagen_alien = pygame.image.load("imagenes/alien.png")
@@ -49,16 +49,16 @@ cant_alien = 73
 ancho_imagen = imagen_alien.get_width()
 rect_alien = imagen_alien.get_rect()
 
-puntos = 0
+#puntos = 0
 
 # Inicializa Jugador, estrellas, aliens y proyectiles
 estrellas = Estrellas(pantalla)
-jugador1 = Jugador(imagen_jugador, velocidad, pantalla)
+jugador1 = Jugador(imagen_jugador, velocidad, pantalla, 0)
 proyectiles = Proyectiles(imagen_proyectil, velocidad_proyectil)
 iniciar_aliens(cant_alien)
 	
 # Bucle principal del juego
-def jugar(cant_alien, nombre, puntos):
+def jugar(cant_alien, nombre):
 
 	hecho = False
 	ciclos = 0
@@ -101,7 +101,7 @@ def jugar(cant_alien, nombre, puntos):
 		cant_alien_visible2 = len(lista_alien)
 		
 		if(cant_alien_visible2 < cant_alien_visible1):
-			puntos += 50
+			jugador1.puntos += 50
 		
 		# Actualiza la cantidad de proyectiles
 		largo_lista_proy = len(lista_proyectil)
@@ -111,20 +111,21 @@ def jugar(cant_alien, nombre, puntos):
 		proyectiles.mover_proyectil(largo_lista_proy)
 		
 		# Si se destruyen todos los aliens agrega más
-		if len(lista_alien) == 0 and cant_alien < 127:
-			cant_alien += 18
+		if len(lista_alien) == 0:
+			if cant_alien < 127:
+				cant_alien += 18
 			iniciar_aliens(cant_alien)
 
 		# Llamado a la función para mover los aliens   
 		if ciclos == 0:
-			mover_alien(lista_alien, ciclos)
+			mover_alien(lista_alien, ciclos, pantalla)
 			cantMov += 1
 			if cantMov == 50:
 				cantMov = 0
 				ciclos = 1
 
 		if ciclos == 1:
-			mover_alien(lista_alien, ciclos)
+			mover_alien(lista_alien, ciclos, pantalla)
 			cantMov += 1
 			if cantMov == 50:
 				cantMov = 0
@@ -143,7 +144,7 @@ def jugar(cant_alien, nombre, puntos):
 		# Nombre y puntuación en pantalla
 		
 		nombre = "Jugador"
-		nombre_puntos = fuente2.render(nombre+" Puntos: "+ str(puntos), 1, (BLANCO))
+		nombre_puntos = fuente2.render(nombre+" Puntos: "+ str(jugador1.puntos), 1, (BLANCO))
 		pantalla.blit(nombre_puntos, (0, 0))
 		
 		# Imprime en pantalla todos los gráficos
