@@ -17,14 +17,10 @@ class Proyectiles(pygame.sprite.Sprite):
 		if largo_lista_proy > 0:
 			for i in range(largo_lista_proy):
 				if lista_proyectil[i][1] > 0:
-				
-
 					lista_proyectil[i][1] -= velocidad_proyectil
 					if lista_proyectil[i][1] <= 0:
 						del lista_proyectil[i]
-						break
-					
-	# Añade un nuevo proyectil a la lista	   
+						break	
 
 	# Añade un nuevo proyectil a la lista
 	def nuevo_disparo(self, jugador_x, jugador_y):

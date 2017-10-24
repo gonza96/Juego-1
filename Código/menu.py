@@ -60,7 +60,7 @@ def dificultad():
 	pass
 
 def guardar():
-        pass
+		pass
 
 def mostrar_opciones():
 
