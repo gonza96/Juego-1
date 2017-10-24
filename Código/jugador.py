@@ -65,6 +65,7 @@ class Jugador(pygame.sprite.Sprite):
                             nueva_partida = True
                             self.rect.x = pantalla.get_width() / 2 - self.image.get_width() / 2
                             self.rect.y = pantalla.get_height() - self.image.get_height()
-                            iniciar_aliens(73)
+                            reset_aliens(lista_alien)
+                                
                             nueva_partida = True
                    
