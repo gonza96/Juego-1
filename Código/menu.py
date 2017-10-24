@@ -40,7 +40,7 @@ class Menu:
 		altura_de_opcion = 35
 		x = pantalla.get_width() / 2 - 120
 		y = pantalla.get_height() / 2 - 100
-		
+
 		for (titulo, funcion) in self.opciones:
 			if indice == self.seleccionado:
 				color = (ROJO)
@@ -51,7 +51,7 @@ class Menu:
 			posicion = (x, y + altura_de_opcion * indice)
 			indice += 1
 			pantalla.blit(imagen, posicion)
-	
+
 def comenzar_nuevo_juego():
 	nombre = ""
 	jugar(cant_alien, nombre)
@@ -67,14 +67,14 @@ def mostrar_opciones():
 	opciones_config = [
 	("Dificultad", dificultad),
 	("Guardar partida", guardar)
-   ] 
+   ]
 	menu_opciones = Menu(opciones_config)
 	volver = False
-	
+
 	while not volver:
 
 		teclas = pygame.key.get_pressed()
-		
+
 		for evento in pygame.event.get():
 			if evento.type == pygame.QUIT or teclas[pygame.K_q]:
 				volver = True
@@ -89,21 +89,41 @@ def mostrar_opciones():
 def cargar_partida():
 	pass
 
-def creditos():
-	
+def como_jugar():
+
 	volver = False
-	creditos_juego = fuente3.render("Agregar créditos...", 1, (BLANCO))
-	rect_creditos = creditos_juego.get_rect()
-	rect_creditos.centerx = pantalla.get_rect().centerx
-	rect_creditos.centery = pantalla.get_rect().centery
+
 	while not volver:
+
 		teclas = pygame.key.get_pressed()
+
+		for evento in pygame.event.get():
+			if evento.type == pygame.QUIT or teclas[pygame.K_q]: volver = True
+
+		pantalla.blit(fondo_teclas, (0, 0))
+
+		pygame.display.flip()
+		pygame.time.delay(10)
+
+def creditos():
+
+	volver = False
+	#creditos_juego = fuente3.render("Agregar créditos...", 1, (BLANCO))
+	#rect_creditos = creditos_juego.get_rect()
+	#rect_creditos.centerx = pantalla.get_rect().centerx
+	#rect_creditos.centery = pantalla.get_rect().centery
+
+	while not volver:
+
+		teclas = pygame.key.get_pressed()
+
 		for evento in pygame.event.get():
 			if evento.type == pygame.QUIT or teclas[pygame.K_q]:
 				volver = True
 
-		pantalla.blit(creditos_juego, (rect_creditos))
-		
+		pantalla.blit(fondo_creditos, (0, 0))
+		#pantalla.blit(creditos_juego, (rect_creditos))
+
 		pygame.display.flip()
 		pygame.time.delay(10)
 
@@ -115,20 +135,20 @@ def salir_del_programa():
 
 
 if __name__ == '__main__':
-	   
+
 	salir = False
 	iniciado = False
 
 	opciones = [
 		("Nuevo juego", comenzar_nuevo_juego),
 		("Cargar partida", cargar_partida),
-		("Opciones", mostrar_opciones),
+		("Cómo jugar", como_jugar),
 		("Creditos", creditos),
 		("Salir", salir_del_programa)
 		]
-		
+
 	menu = Menu(opciones)
-	
+
 	while not salir:
 		teclado = pygame.key.get_pressed()
 		for e in pygame.event.get():
@@ -136,7 +156,7 @@ if __name__ == '__main__':
 				salir_del_programa()
 
 		pantalla.blit(imagen_fondo, (0, 0))
-		
+
 		menu.actualizar()
 		menu.imprimir(pantalla)
 
