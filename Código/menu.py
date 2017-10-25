@@ -55,36 +55,6 @@ def comenzar_nuevo_juego():
 	nombre = ""
 	jugar(cant_alien, nombre)
 
-def dificultad():
-	pass
-
-def guardar():
-		pass
-
-def mostrar_opciones():
-
-	opciones_config = [
-	("Dificultad", dificultad),
-	("Guardar partida", guardar)
-   ]
-	menu_opciones = Menu(opciones_config)
-	volver = False
-
-	while not volver:
-
-		teclas = pygame.key.get_pressed()
-
-		for evento in pygame.event.get():
-			if evento.type == pygame.QUIT or teclas[pygame.K_q]:
-				volver = True
-
-		pantalla.blit(imagen_fondo, (0, 0))
-		menu_opciones.actualizar()
-		menu_opciones.imprimir(pantalla)
-
-		pygame.display.flip()
-		pygame.time.delay(10)
-
 def cargar_partida():
 	pass
 
@@ -134,7 +104,6 @@ if __name__ == '__main__':
 
 	opciones = [
 		("Nuevo juego", comenzar_nuevo_juego),
-		("Cargar partida", cargar_partida),
 		("Cómo jugar", como_jugar),
 		("Creditos", creditos),
 		("Salir", salir_del_programa)
