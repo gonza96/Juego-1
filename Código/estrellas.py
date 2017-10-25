@@ -4,10 +4,10 @@ from main import *
 
 BLANCO = (255, 255, 255)
 lista_estrella = []
-# Definición de la clase estrellas
 
+# Definición de la clase estrellas
 class Estrellas(pygame.sprite.Sprite):
-	
+
 	def __init__(self, pantalla):
 
 		# Genera 100 estrellas en posiciones aleatorias
@@ -15,7 +15,7 @@ class Estrellas(pygame.sprite.Sprite):
 			self.estrella_x = random.randrange(0, pantalla.get_width())
 			self.estrella_y = random.randrange(0, pantalla.get_height())
 			lista_estrella.append([self.estrella_x, self.estrella_y])
-			
+
 	def actualizar_pos(self, lista_estrella, pantalla):
 
 		# Desplaza las estrellas una posición hacia abajo

@@ -24,15 +24,14 @@ class Menu:
 				print("Selecciona la opción '%s'." % titulo)
 				funcion()
 
-		# procura que el cursor esté entre las opciones permitidas
+		# Procura que el cursor esté entre las opciones permitidas
 		if self.seleccionado < 0:
 			self.seleccionado = 0
 		elif self.seleccionado > self.total - 1:
 			self.seleccionado = self.total - 1
 
-		# indica si el usuario mantiene pulsada alguna tecla.
+		# Indica si el usuario mantiene pulsada alguna tecla.
 		self.mantiene_pulsado = k[pygame.K_UP] or k[pygame.K_DOWN] or k[pygame.K_RETURN]
-
 
 	def imprimir(self, pantalla):
 		total = self.total
@@ -108,10 +107,6 @@ def como_jugar():
 def creditos():
 
 	volver = False
-	#creditos_juego = fuente3.render("Agregar créditos...", 1, (BLANCO))
-	#rect_creditos = creditos_juego.get_rect()
-	#rect_creditos.centerx = pantalla.get_rect().centerx
-	#rect_creditos.centery = pantalla.get_rect().centery
 
 	while not volver:
 
@@ -122,7 +117,6 @@ def creditos():
 				volver = True
 
 		pantalla.blit(fondo_creditos, (0, 0))
-		#pantalla.blit(creditos_juego, (rect_creditos))
 
 		pygame.display.flip()
 		pygame.time.delay(10)
@@ -132,7 +126,6 @@ def salir_del_programa():
 	print ("Gracias por utilizar este programa.")
 	pygame.quit()
 	sys.exit(0)
-
 
 if __name__ == '__main__':
 

@@ -4,7 +4,7 @@ lista_alien = []
 
 # Función para mover los aliens en el eje x
 def mover_alien(lista_alien, ciclos, pantalla):
-						
+
 	if len(lista_alien) > 0:
 		for i in range(len(lista_alien)):
 			if ciclos == 1:
@@ -17,19 +17,19 @@ def mover_alien(lista_alien, ciclos, pantalla):
 					lista_alien[i][0] += 1
 				if(lista_alien[i][0] >= pantalla.get_width() - 32):
 					lista_alien[i][0] = 0
-								
+
 
 # Función para mover los aliens hacia el jugador
 def mover_alien_y(lista_alien):
 	if len(lista_alien) > 0:
 		for i in range(len(lista_alien)):
 			lista_alien[i][1] += 3
-										
+
 # Coprueba si hay colisiones entre los proyectiles y los aliens
 def Colisiones(lista_alien, lista_proyectil, ancho_imagen):
-		
+
 	borro = False
-	
+
 	if len(lista_alien) != 0 and len(lista_proyectil) != 0:
 		for i in range (len(lista_alien)):
 			s = 0
@@ -69,7 +69,7 @@ def reset_aliens(lista_alien):
 	# Completa la lista de aliens
 		for i in range(73 - len(lista_alien)):
 			lista_alien.append([0, 0])
-	
+
 	# Posiciona los aliens
 	for i in range(73):
 		alien_x = s * 40 + 35
@@ -82,15 +82,3 @@ def reset_aliens(lista_alien):
 			s += 1
 		cont += 1
 		lista_alien[i] = ([alien_x, alien_y])
-
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
