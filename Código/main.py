@@ -37,7 +37,7 @@ fondo_creditos = pygame.image.load("Imagenes/Fondo/fondo_creditos.png")
 fondo_teclas = pygame.image.load("Imagenes/Fondo/fondo_teclas.png")
 fondo_juego = pygame.image.load("Imagenes/Fondo/fondo_juego.png")
 
-imagen_jugador = pygame.image.load("Imagenes/Jugador/jug_der1.png")
+imagen_jugador = pygame.image.load("Imagenes/Jugador/player_R1.png")
 imagen_jugador.set_colorkey(BLANCO)
 
 imagen_proyectil = pygame.image.load("Imagenes/Jugador/hand.png")
@@ -48,8 +48,8 @@ cant_alien = 73
 ancho_imagen = imagen_alien.get_width()
 rect_alien = imagen_alien.get_rect()
 
-imagen_cama = pygame.image.load("Imagenes/Obstaculos/cama.jpg")
-imagen_cama.set_colorkey(BLANCO)
+imagen_bed = pygame.image.load("Imagenes/Obstaculos/bed.png")
+imagen_bed.set_colorkey(BLANCO)
 
 # Sonidos
 pygame.mixer.music.load("Sonidos/musica_juego.wav")
@@ -71,9 +71,9 @@ def jugar(cant_alien, nombre):
 	cont = 0
 	cant_alien_visible1 = 0
 	cant_alien_visible2 = 0
-	
-	obstaculos(imagen_cama, pantalla)
-		
+
+	obstaculos(imagen_bed, pantalla)
+
 	while not hecho:
 
 		# Borra la pantalla
@@ -103,8 +103,8 @@ def jugar(cant_alien, nombre):
 		# Dibuja los obstáculos en pantalla
 		if len(lista_obstaculos) != 0:
 			for i in range(len(lista_obstaculos)):
-				pantalla.blit(imagen_cama, (lista_obstaculos[i][0], lista_obstaculos[i][1]))
-				
+				pantalla.blit(imagen_bed, (lista_obstaculos[i][0], lista_obstaculos[i][1]))
+
 		# Llamado a la función de colisiones, verifica cantidad de aliens en pantalla
 		# para ver si alguno fue eliminado
 		cant_alien_visible1 = len(lista_alien)
@@ -121,10 +121,10 @@ def jugar(cant_alien, nombre):
 		# Llamado para desplazar los proyectiles y las estrellas
 		estrellas.actualizar_pos(lista_estrella, pantalla)
 		proyectiles.mover_proyectil(largo_lista_proy)
-		
+
 		# Actualiza posicion obstaculos
-		mover_obstaculos(imagen_cama, pantalla)
-		
+		mover_obstaculos(imagen_bed, pantalla)
+
 		# Si se destruyen todos los aliens agrega más
 		if len(lista_alien) == 0:
 			#if cant_alien < 127:
@@ -155,10 +155,10 @@ def jugar(cant_alien, nombre):
 		jugador1.actualizar_pos(velocidad, teclas, pantalla)
 		jugador1.dibujar(pantalla)
 		jugador1.colision_alien(lista_alien, pantalla)
-		
+
 		# Colision con obstaculos
-		colision_obstaculos(jugador1, imagen_cama, pantalla)
-		
+		colision_obstaculos(jugador1, imagen_bed, pantalla)
+
 		# Nombre y puntuación en pantalla
 		nombre = "Jugador"
 		nombre_puntos = fuente2.render(nombre+" Puntos: "+ str(jugador1.puntos), 1, (BLANCO))

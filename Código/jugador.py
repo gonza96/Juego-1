@@ -7,10 +7,10 @@ ROJO = (255, 0, 0)
 
 # Definición de la clase jugador
 class Jugador(pygame.sprite.Sprite):
-	
+
 	def __init__(self, imagen, velocidad, pantalla, puntos):
 		super().__init__()
-		
+
 		self.image = imagen
 		self.rect = self.image.get_rect()
 		self.rect.x = pantalla.get_width() / 2 - self.image.get_width() / 2
@@ -37,7 +37,7 @@ class Jugador(pygame.sprite.Sprite):
 	def dibujar(self, pantalla):
 		pantalla.blit(self.image, self.rect)
 
-	# Comprueba si hay colisión entre el jugador y los aliens 
+	# Comprueba si hay colisión entre el jugador y los aliens
 	def colision_alien(self, lista_alien, pantalla):
 		rect_alien = (0, 0, 0, 0)
 		fuente_perder = pygame.font.Font(None, 50)
@@ -51,7 +51,7 @@ class Jugador(pygame.sprite.Sprite):
 		rect_texto.centery = pantalla.get_rect().centery
 
 		nueva_partida = False
-		
+
 		for i in range(len(lista_alien)):
 			rect_alien = (lista_alien[i][0], lista_alien[i][1], 32, 32)
 			if self.rect.colliderect(rect_alien):
@@ -68,6 +68,5 @@ class Jugador(pygame.sprite.Sprite):
 							self.rect.y = pantalla.get_height() - self.image.get_height()
 							reset_aliens(lista_alien)
 							self.puntos = 0
-							
+
 							nueva_partida = True
-		
