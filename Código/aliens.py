@@ -1,6 +1,11 @@
 from main import *
+import pygame
+import random
 
 lista_alien = []
+lista_obstaculos = []
+
+ROJO = (255, 0, 0)
 
 # Función para mover los aliens en el eje x
 def mover_alien(lista_alien, ciclos, pantalla):
@@ -82,3 +87,108 @@ def reset_aliens(lista_alien):
 			s += 1
 		cont += 1
 		lista_alien[i] = ([alien_x, alien_y])
+
+# Genera mas "enemigos"
+
+def obstaculos(imagen, pantalla):
+	x = random.randrange(0, pantalla.get_width() - imagen.get_width())
+	y = pantalla.get_height() - imagen.get_height()
+	velocidad = random.randrange(2, 5)
+	direccion = random.randrange(0, 2)
+		
+	if(len(lista_obstaculos) < 3):
+		lista_obstaculos.append([x, y, velocidad, direccion])
+
+
+def mover_obstaculos(imagen, pantalla):
+	
+	if len(lista_obstaculos) != 0:
+		for i in range(len(lista_obstaculos)):
+			
+			if lista_obstaculos[i][0] < (pantalla.get_width() - imagen.get_width()) and lista_obstaculos[i][3] == 0:
+				lista_obstaculos[i][0] += lista_obstaculos[i][2]
+			if lista_obstaculos[i][0] >= pantalla.get_width() - imagen.get_width():
+				lista_obstaculos[i][3] = 1
+					
+			if lista_obstaculos[i][0] > 0 and lista_obstaculos[i][3] == 1:
+				lista_obstaculos[i][0] -= lista_obstaculos[i][2]
+			if lista_obstaculos[i][0] <= 0:
+				lista_obstaculos[i][3] = 0
+
+				
+def reset_obstaculos(lista_obstaculos):
+	if len(lista_obstaculos)!= 0:
+		for i in range(len(lista_obstaculos)):
+			lista_obstaculos[i][0] = random.randrange(0, 500)
+			lista_obstaculos[i][2] = random.randrange(2, 5)
+			lista_obstaculos[i][3] = random.randrange(0, 2)
+	
+	
+def colision_obstaculos(jugador, imagen, pantalla):
+	
+	fuente_perder = pygame.font.Font(None, 50)
+	texto_perder = fuente_perder.render("Perdiste", 1, (ROJO))
+	texto_reiniciar = fuente_perder.render("Pulsa r para volver a iniciar", 1, (ROJO))
+	rect_texto_r = texto_reiniciar.get_rect()
+	rect_texto_r.centerx = pantalla.get_rect().centerx
+	rect_texto_r.centery = 500
+	rect_texto = texto_perder.get_rect()
+	rect_texto.centerx = pantalla.get_rect().centerx
+	rect_texto.centery = pantalla.get_rect().centery
+
+	nueva_partida = False
+	
+	if len(lista_obstaculos) != 0:
+		rect_jugador = jugador.rect
+		
+		ancho_obstaculo = imagen.get_width()
+		alto_obstaculo = imagen.get_height()
+		rect_obstaculo = (0, 0, alto_obstaculo, ancho_obstaculo)
+		
+		for i in range(len(lista_obstaculos)):
+			rect_obstaculo = (lista_obstaculos[i][0], lista_obstaculos[i][1], alto_obstaculo, ancho_obstaculo)
+			if jugador.rect.colliderect(rect_obstaculo):
+				while not nueva_partida:
+					tecla = pygame.key.get_pressed()
+					pantalla.blit(texto_perder, rect_texto)
+					pantalla.blit(texto_reiniciar, rect_texto_r)
+					pygame.display.flip()
+
+					for evento in pygame.event.get():
+						if evento.type == pygame.QUIT or tecla[pygame.K_r]:
+							nueva_partida = True
+							jugador.rect.x = pantalla.get_width() / 2 - jugador.image.get_width() / 2
+							jugador.rect.y = pantalla.get_height() - jugador.image.get_height()
+							reset_aliens(lista_alien)
+							reset_obstaculos(lista_obstaculos)
+							jugador.puntos = 0
+							
+							nueva_partida = True
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+				

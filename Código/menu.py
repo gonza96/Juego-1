@@ -55,9 +55,6 @@ def comenzar_nuevo_juego():
 	nombre = ""
 	jugar(cant_alien, nombre)
 
-def cargar_partida():
-	pass
-
 def como_jugar():
 
 	volver = False
