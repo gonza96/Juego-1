@@ -52,6 +52,10 @@ rect_alien = imagen_alien.get_rect()
 imagen_bed = pygame.image.load("Imagenes/Obstaculos/bed.png")
 imagen_bed.set_colorkey(BLANCO)
 
+imagen_dog = pygame.image.load("Imagenes/Obstaculos/dog.png")
+
+imagen_clock = pygame.image.load("Imagenes/Obstaculos/clock.png")
+
 # Sonidos
 pygame.mixer.music.load("Sonidos/musica_juego.wav")
 sonido_disparo = pygame.mixer.Sound("Sonidos/sonido_disparo.wav")
@@ -74,6 +78,10 @@ def jugar(cant_alien, nombre):
 	cant_alien_visible2 = 0
 
 	obstaculos(imagen_bed, pantalla)
+
+	#obstaculos(imagen_dog, pantalla)
+
+	obstaculos(imagen_clock, pantalla)
 
 	while not hecho:
 
@@ -106,6 +114,14 @@ def jugar(cant_alien, nombre):
 			for i in range(len(lista_obstaculos)):
 				pantalla.blit(imagen_bed, (lista_obstaculos[i][0], lista_obstaculos[i][1]))
 
+		#if len(lista_obstaculos) != 0:
+		#	for i in range(len(lista_obstaculos)):
+		#		pantalla.blit(imagen_dog, (lista_obstaculos[i][0], lista_obstaculos[i][1]))
+
+		if len(lista_obstaculos) != 0:
+			for i in range(len(lista_obstaculos)):
+				pantalla.blit(imagen_clock, (lista_obstaculos[i][1], lista_obstaculos[i][0]))
+
 		# Llamado a la función de colisiones, verifica cantidad de aliens en pantalla
 		# para ver si alguno fue eliminado
 		cant_alien_visible1 = len(lista_alien)
@@ -125,6 +141,10 @@ def jugar(cant_alien, nombre):
 
 		# Actualiza posicion obstaculos
 		mover_obstaculos(imagen_bed, pantalla)
+
+		#mover_obstaculos(imagen_dog, pantalla)
+
+		mover_obstaculos(imagen_clock, pantalla)
 
 		# Si se destruyen todos los aliens agrega más
 		if len(lista_alien) == 0:
