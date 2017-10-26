@@ -36,6 +36,7 @@ imagen_fondo = pygame.image.load("Imagenes/Fondo/fondo_menu.png")
 fondo_creditos = pygame.image.load("Imagenes/Fondo/fondo_creditos.png")
 fondo_teclas = pygame.image.load("Imagenes/Fondo/fondo_teclas.png")
 fondo_juego = pygame.image.load("Imagenes/Fondo/fondo_juego.png")
+fondo_historia = pygame.image.load("Imagenes/Fondo/fondo_historia.png")
 
 imagen_jugador = pygame.image.load("Imagenes/Jugador/player_R1.png")
 imagen_jugador.set_colorkey(BLANCO)

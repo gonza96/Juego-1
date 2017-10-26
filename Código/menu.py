@@ -71,6 +71,24 @@ def como_jugar():
 		pygame.display.flip()
 		pygame.time.delay(10)
 
+def historia():
+
+	volver = False
+
+	while not volver:
+
+		teclas = pygame.key.get_pressed()
+
+		for evento in pygame.event.get():
+			if evento.type == pygame.QUIT or teclas[pygame.K_q]:
+				volver = True
+
+		pantalla.blit(fondo_historia, (0, 0))
+
+		pygame.display.flip()
+		pygame.time.delay(10)
+
+
 def creditos():
 
 	volver = False
@@ -102,6 +120,7 @@ if __name__ == '__main__':
 	opciones = [
 		("Nuevo juego", comenzar_nuevo_juego),
 		("Cómo jugar", como_jugar),
+                ("Historia", historia),
 		("Creditos", creditos),
 		("Salir", salir_del_programa)
 		]
