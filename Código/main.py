@@ -38,8 +38,6 @@ fondo_teclas = pygame.image.load("Imagenes/Fondo/fondo_teclas.png")
 fondo_juego = pygame.image.load("Imagenes/Fondo/fondo_juego.png")
 fondo_historia = pygame.image.load("Imagenes/Fondo/fondo_historia.png")
 
-imagen_jugador = pygame.image.load("Imagenes/Jugador/player_R1.png")
-imagen_jugador.set_colorkey(BLANCO)
 suenio = 0
 
 imagen_proyectil = pygame.image.load("Imagenes/Jugador/hand.png")
@@ -63,7 +61,7 @@ sonido_disparo = pygame.mixer.Sound("Sonidos/sonido_disparo.wav")
 
 # Inicializa Jugador, estrellas, aliens y proyectiles
 estrellas = Estrellas(pantalla)
-jugador1 = Jugador(imagen_jugador, velocidad, pantalla, 0, suenio)
+jugador1 = Jugador(velocidad, pantalla, 0, suenio)
 proyectiles = Proyectiles(imagen_proyectil, velocidad_proyectil)
 iniciar_aliens(cant_alien)
 #pygame.mixer.music.play(10)
@@ -87,7 +85,9 @@ def jugar(cant_alien, nombre):
 		# Borra la pantalla
 		pantalla.fill(NEGRO)
 		pantalla.blit(fondo_juego, (0, 0))
-
+		
+		jugador1.movimiento = False
+		
 		# Busca teclas presionadas
 		teclas = pygame.key.get_pressed()
 		for evento in pygame.event.get():
@@ -95,8 +95,11 @@ def jugar(cant_alien, nombre):
 				hecho = True
 			if evento.type == pygame.MOUSEBUTTONDOWN or teclas[pygame.K_f]:
 				sonido_disparo.play()
-				pos_disparo = (jugador1.rect.x + (jugador1.image.get_width() / 2) - (proyectiles.image.get_width() / 2))
+				pos_disparo = (jugador1.rect.x + (jugador1.imagen.get_width() / 2) - (proyectiles.image.get_width() / 2))
 				proyectiles.nuevo_disparo(pos_disparo, jugador1.rect.y)
+			if evento.type == pygame.KEYUP:
+				jugador1.movimiento = False
+				jugador1.imagen_actual = 0
 
 		# Dibuja en pantalla los proyectiles disparados
 		if len(lista_proyectil) != 0:
@@ -112,14 +115,6 @@ def jugar(cant_alien, nombre):
 		if len(lista_obstaculos) != 0:
 			for i in range(len(lista_obstaculos)):
 				pantalla.blit(imagen_bed, (lista_obstaculos[i][0], lista_obstaculos[i][1]))
-
-		#if len(lista_obstaculos) != 0:
-		#	for i in range(len(lista_obstaculos)):
-		#		pantalla.blit(imagen_dog, (lista_obstaculos[i][0], lista_obstaculos[i][1]))
-
-		if len(lista_obstaculos) != 0:
-			for i in range(len(lista_obstaculos)):
-				pantalla.blit(imagen_clock, (lista_obstaculos[i][1], lista_obstaculos[i][0]))
 
 		# Llamado a la función de colisiones, verifica cantidad de aliens en pantalla
 		# para ver si alguno fue eliminado
@@ -147,8 +142,6 @@ def jugar(cant_alien, nombre):
 
 		# Si se destruyen todos los aliens agrega más
 		if len(lista_alien) == 0:
-			#if cant_alien < 127:
-			#	cant_alien += 18
 			iniciar_aliens(cant_alien)
 
 		# Llamado a la función para mover los aliens
@@ -171,10 +164,14 @@ def jugar(cant_alien, nombre):
 			mover_alien_y(lista_alien)
 			cont = 0
 		
-		# Contador de sueño
-		#otro_contador += 1
-		#if otro_contador == 25:
-		#	jugador1.suenio(ciclos, pantalla)
+		#########################################
+		otro_contador += 1
+		if otro_contador == 10 and jugador1.t == 0:
+			jugador1.t = 1
+			otro_contador = 0
+		if otro_contador == 10 and jugador1.t == 1:
+			jugador1.t = 0
+			otro_contador = 0
 		
 		# Actualiza la posición x,y del jugador y lo dibuja en pantalla
 		jugador1.actualizar_pos(velocidad, teclas, pantalla)
@@ -190,8 +187,8 @@ def jugar(cant_alien, nombre):
 		suenio_jugador = fuente2.render("Sueño: "+ str(jugador1.suenio), 1, (BLANCO))
 		pantalla.blit(suenio_jugador, (500, 0))
 		pantalla.blit(nombre_puntos, (0, 0))
-
+		
 		# Imprime en pantalla todos los gráficos
 		pygame.display.flip()
 
-		reloj.tick(90)
+		reloj.tick(60)

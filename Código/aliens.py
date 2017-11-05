@@ -136,8 +136,8 @@ def colision_obstaculos(jugador, imagen, pantalla):
 			if jugador.rect.colliderect(rect_obstaculo):
 				jugador.perder(pantalla)
 
-				jugador.rect.x = pantalla.get_width() / 2 - jugador.image.get_width() / 2
-				jugador.rect.y = pantalla.get_height() - jugador.image.get_height()
+				jugador.rect.x = pantalla.get_width() / 2 - jugador.imagen.get_width() / 2
+				jugador.rect.y = pantalla.get_height() - jugador.imagen.get_height()
 				reset_aliens(lista_alien)
 				reset_obstaculos(lista_obstaculos)
 				jugador.puntos = 0
