@@ -8,7 +8,7 @@ ROJO = (255, 0, 0)
 # Definición de la clase jugador
 class Jugador(pygame.sprite.Sprite):
 
-	def __init__(self, imagen, velocidad, pantalla, puntos):
+	def __init__(self, imagen, velocidad, pantalla, puntos, suenio):
 		super().__init__()
 
 		self.image = imagen
@@ -17,6 +17,7 @@ class Jugador(pygame.sprite.Sprite):
 		self.rect.y = pantalla.get_height() - self.image.get_height()
 		self.velocidad = velocidad
 		self.puntos = 0
+		self.suenio = 0
 
 	# Actualiza la posición del jugador
 	def actualizar_pos(self, velocidad, teclas, pantalla):
@@ -40,6 +41,25 @@ class Jugador(pygame.sprite.Sprite):
 	# Comprueba si hay colisión entre el jugador y los aliens
 	def colision_alien(self, lista_alien, pantalla):
 		rect_alien = (0, 0, 0, 0)
+		
+		for i in range(len(lista_alien)):
+			rect_alien = (lista_alien[i][0], lista_alien[i][1], 32, 32)
+			if self.rect.colliderect(rect_alien):
+				self.perder(pantalla)
+
+	def suenio(self, accion, pantalla):
+			if self.suenio >= 0 and accion == 1:
+				suenio += 1
+			if self.suenio >= 10:
+				perder(pantalla)
+				self.suenio = 0
+			if self.suenio >= 1 and accion == 0:
+				self.suenio -=1
+
+	def perder(self, pantalla):
+
+		nueva_partida = False
+
 		fuente_perder = pygame.font.Font(None, 50)
 		texto_perder = fuente_perder.render("Perdiste", 1, (ROJO))
 		texto_reiniciar = fuente_perder.render("Pulsa r para volver a iniciar", 1, (ROJO))
@@ -50,23 +70,18 @@ class Jugador(pygame.sprite.Sprite):
 		rect_texto.centerx = pantalla.get_rect().centerx
 		rect_texto.centery = pantalla.get_rect().centery
 
-		nueva_partida = False
+		while not nueva_partida:
+			tecla = pygame.key.get_pressed()
+			pantalla.blit(texto_perder, rect_texto)
+			pantalla.blit(texto_reiniciar, rect_texto_r)
+			pygame.display.flip()
+			
+			for evento in pygame.event.get():
+				if evento.type == pygame.QUIT or tecla[pygame.K_r]:
+					nueva_partida = True
+					self.rect.x = pantalla.get_width() / 2 - self.image.get_width() / 2
+					self.rect.y = pantalla.get_height() - self.image.get_height()
+					reset_aliens(lista_alien)
+					self.puntos = 0
 
-		for i in range(len(lista_alien)):
-			rect_alien = (lista_alien[i][0], lista_alien[i][1], 32, 32)
-			if self.rect.colliderect(rect_alien):
-				while not nueva_partida:
-					tecla = pygame.key.get_pressed()
-					pantalla.blit(texto_perder, rect_texto)
-					pantalla.blit(texto_reiniciar, rect_texto_r)
-					pygame.display.flip()
-
-					for evento in pygame.event.get():
-						if evento.type == pygame.QUIT or tecla[pygame.K_r]:
-							nueva_partida = True
-							self.rect.x = pantalla.get_width() / 2 - self.image.get_width() / 2
-							self.rect.y = pantalla.get_height() - self.image.get_height()
-							reset_aliens(lista_alien)
-							self.puntos = 0
-
-							nueva_partida = True
+					nueva_partida = True

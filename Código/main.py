@@ -40,6 +40,7 @@ fondo_historia = pygame.image.load("Imagenes/Fondo/fondo_historia.png")
 
 imagen_jugador = pygame.image.load("Imagenes/Jugador/player_R1.png")
 imagen_jugador.set_colorkey(BLANCO)
+suenio = 0
 
 imagen_proyectil = pygame.image.load("Imagenes/Jugador/hand.png")
 imagen_proyectil.set_colorkey(BLANCO)
@@ -62,26 +63,24 @@ sonido_disparo = pygame.mixer.Sound("Sonidos/sonido_disparo.wav")
 
 # Inicializa Jugador, estrellas, aliens y proyectiles
 estrellas = Estrellas(pantalla)
-jugador1 = Jugador(imagen_jugador, velocidad, pantalla, 0)
+jugador1 = Jugador(imagen_jugador, velocidad, pantalla, 0, suenio)
 proyectiles = Proyectiles(imagen_proyectil, velocidad_proyectil)
 iniciar_aliens(cant_alien)
-pygame.mixer.music.play(10)
+#pygame.mixer.music.play(10)
 
 # Bucle principal del juego
 def jugar(cant_alien, nombre):
 
 	hecho = False
+	
+	otro_contador = 0
 	ciclos = 0
 	cantMov = 0
 	cont = 0
 	cant_alien_visible1 = 0
 	cant_alien_visible2 = 0
-
+	accion = 0
 	obstaculos(imagen_bed, pantalla)
-
-	#obstaculos(imagen_dog, pantalla)
-
-	obstaculos(imagen_clock, pantalla)
 
 	while not hecho:
 
@@ -171,7 +170,12 @@ def jugar(cant_alien, nombre):
 		if cont == 120:
 			mover_alien_y(lista_alien)
 			cont = 0
-
+		
+		# Contador de sueño
+		#otro_contador += 1
+		#if otro_contador == 25:
+		#	jugador1.suenio(ciclos, pantalla)
+		
 		# Actualiza la posición x,y del jugador y lo dibuja en pantalla
 		jugador1.actualizar_pos(velocidad, teclas, pantalla)
 		jugador1.dibujar(pantalla)
@@ -183,6 +187,8 @@ def jugar(cant_alien, nombre):
 		# Nombre y puntuación en pantalla
 		nombre = "Jugador"
 		nombre_puntos = fuente2.render(nombre+" Puntos: "+ str(jugador1.puntos), 1, (BLANCO))
+		suenio_jugador = fuente2.render("Sueño: "+ str(jugador1.suenio), 1, (BLANCO))
+		pantalla.blit(suenio_jugador, (500, 0))
 		pantalla.blit(nombre_puntos, (0, 0))
 
 		# Imprime en pantalla todos los gráficos
