@@ -109,7 +109,7 @@ class Jugador(pygame.sprite.Sprite):
 					self.rect.y = pantalla.get_height() - self.imagen.get_height()
 					reset_aliens(lista_alien)
 					self.puntos = 0
-
+					
 					nueva_partida = True
 					
 				if evento.type == pygame.QUIT or tecla[pygame.K_q]:
@@ -124,4 +124,4 @@ class Jugador(pygame.sprite.Sprite):
 			self.u = 0
 		
 		if self.imagen_actual > (len(self.imagenes)):
-			self.imagen_actual = 0		   
+			self.imagen_actual = 0

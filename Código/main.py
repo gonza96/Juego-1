@@ -1,4 +1,5 @@
 import pygame
+import random
 from jugador import *
 from estrellas import *
 from proyectiles import *
@@ -75,6 +76,7 @@ def jugar(cant_alien, nombre):
 	ciclos = 0
 	cantMov = 0
 	cont = 0
+	cont2 = 0
 	cant_alien_visible1 = 0
 	cant_alien_visible2 = 0
 	accion = 0
@@ -110,11 +112,25 @@ def jugar(cant_alien, nombre):
 		if len(lista_alien) != 0:
 			for i in range(len(lista_alien)):
 				pantalla.blit(imagen_alien, lista_alien[i])
-
-		# Dibuja los obstáculos en pantalla
-		if len(lista_obstaculos) != 0:
-			for i in range(len(lista_obstaculos)):
-				pantalla.blit(imagen_bed, (lista_obstaculos[i][0], lista_obstaculos[i][1]))
+		
+		cont2 += 1
+		if cont2 >= 250:
+			# Dibuja los obstáculos en pantalla
+			if len(lista_obstaculos) != 0:
+				for i in range(len(lista_obstaculos)):
+					pantalla.blit(imagen_bed, (lista_obstaculos[i][0], lista_obstaculos[i][1]))
+			
+			# Colision con obstaculos
+			colision_obstaculos(jugador1, imagen_bed, pantalla)
+			
+			# Actualiza posicion obstaculos
+			mover_obstaculos(imagen_bed, pantalla)
+			
+			if cont2 == 1000:
+				cont2 = 0
+				for i in range(len(lista_obstaculos)):
+					lista_obstaculos[i][2] = random.randrange(1, 3)
+					lista_obstaculos[i][3] = random.randrange(0, 1)
 
 		# Llamado a la función de colisiones, verifica cantidad de aliens en pantalla
 		# para ver si alguno fue eliminado
@@ -132,13 +148,6 @@ def jugar(cant_alien, nombre):
 		# Llamado para desplazar los proyectiles y las estrellas
 		estrellas.actualizar_pos(lista_estrella, pantalla)
 		proyectiles.mover_proyectil(largo_lista_proy)
-
-		# Actualiza posicion obstaculos
-		mover_obstaculos(imagen_bed, pantalla)
-
-		#mover_obstaculos(imagen_dog, pantalla)
-
-		mover_obstaculos(imagen_clock, pantalla)
 
 		# Si se destruyen todos los aliens agrega más
 		if len(lista_alien) == 0:
@@ -177,9 +186,6 @@ def jugar(cant_alien, nombre):
 		jugador1.actualizar_pos(velocidad, teclas, pantalla)
 		jugador1.dibujar(pantalla)
 		jugador1.colision_alien(lista_alien, pantalla)
-
-		# Colision con obstaculos
-		colision_obstaculos(jugador1, imagen_bed, pantalla)
 
 		# Nombre y puntuación en pantalla
 		nombre = "Jugador"
