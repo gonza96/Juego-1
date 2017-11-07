@@ -19,6 +19,8 @@ AZUL = (0, 250, 255)
 pantalla = pygame.display.set_mode([800, 600])
 pygame.display.set_caption("Developer Vs. Java")
 pygame.mouse.set_visible(0)
+pygame.display.set_icon(pygame.image.load("Imagenes\Jugador\jug_der1.png"))
+
 
 # Fuentes
 fuente = pygame.font.Font("Fuente/PressStart2P-Regular.ttf", 36)
