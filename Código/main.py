@@ -193,8 +193,14 @@ def jugar(cant_alien, nombre):
 		nombre = "Jugador"
 		nombre_puntos = fuente2.render(nombre+" Puntos: "+ str(jugador1.puntos), 1, (BLANCO))
 		suenio_jugador = fuente2.render("Sueño: "+ str(jugador1.suenio), 1, (BLANCO))
-		pantalla.blit(suenio_jugador, (500, 0))
+		pantalla.blit(suenio_jugador, (600, 0))
 		pantalla.blit(nombre_puntos, (0, 0))
+		
+		# Segundos de juego
+		segundos = pygame.time.get_ticks()/1000		
+		segundos = str(segundos)
+		contador = fuente2.render("Tiempo transcurrido: " + segundos, 1, (BLANCO))		
+		pantalla.blit(contador, (250, 0))
 		
 		# Imprime en pantalla todos los gráficos
 		pygame.display.flip()
