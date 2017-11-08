@@ -3,7 +3,7 @@ import random
 from jugador import *
 from estrellas import *
 from proyectiles import *
-from aliens import *
+from tazas import *
 
 pygame.init()
 
@@ -60,11 +60,11 @@ imagen_clock = pygame.image.load("Imagenes/Obstaculos/clock.png")
 pygame.mixer.music.load("Sonidos/musica_juego.wav")
 sonido_disparo = pygame.mixer.Sound("Sonidos/sonido_disparo.wav")
 
-# Inicializa Jugador, estrellas, aliens y proyectiles
+# Inicializa Jugador, estrellas, tazas y proyectiles
 estrellas = Estrellas(pantalla)
 jugador1 = Jugador(velocidad, pantalla, 0, suenio)
 proyectiles = Proyectiles(imagen_proyectil, velocidad_proyectil)
-iniciar_aliens(cant_alien)
+iniciar_tazas(cant_alien)
 pygame.mixer.music.play(10)
 
 #######################
@@ -113,7 +113,7 @@ def jugar(cant_alien, nombre):
 			for i in range(len(lista_proyectil)):
 				pantalla.blit(imagen_proyectil, lista_proyectil[i])
 
-		# Dibuja en pantalla los aliens
+		# Dibuja en pantalla los tazas
 		if len(lista_alien) != 0:
 			for i in range(len(lista_alien)):
 				pantalla.blit(imagen_alien, lista_alien[i])
@@ -137,7 +137,7 @@ def jugar(cant_alien, nombre):
 					lista_obstaculos[i][2] = random.randrange(1, 3)
 					lista_obstaculos[i][3] = random.randrange(0, 1)
 
-		# Llamado a la función de colisiones, verifica cantidad de aliens en pantalla
+		# Llamado a la función de colisiones, verifica cantidad de tazas en pantalla
 		# para ver si alguno fue eliminado
 		cant_alien_visible1 = len(lista_alien)
 		Colisiones(lista_alien, lista_proyectil, ancho_imagen)
@@ -154,11 +154,11 @@ def jugar(cant_alien, nombre):
 		estrellas.actualizar_pos(lista_estrella, pantalla)
 		proyectiles.mover_proyectil(largo_lista_proy)
 
-		# Si se destruyen todos los aliens agrega más
+		# Si se destruyen todos los tazas agrega más
 		if len(lista_alien) == 0:
-			iniciar_aliens(cant_alien)
+			iniciar_tazas(cant_alien)
 
-		# Llamado a la función para mover los aliens
+		# Llamado a la función para mover los tazas
 		if ciclos == 0:
 			mover_alien(lista_alien, ciclos, pantalla)
 			cantMov += 1

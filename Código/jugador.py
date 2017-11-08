@@ -1,7 +1,7 @@
 import pygame
 from main import *
 from menu import *
-from aliens import *
+from tazas import *
 
 ROJO = (255, 0, 0)
 
@@ -17,24 +17,24 @@ class Jugador(pygame.sprite.Sprite):
 		self.imagen4 = pygame.image.load("Imagenes/Jugador/jug_izq1.png")
 		self.imagen5 = pygame.image.load("Imagenes/Jugador/jug_izq2.png")
 		self.imagen6 = pygame.image.load("Imagenes/Jugador/jug_izq3.png")
-		
+
 		self.imagenes = [[self.imagen1, self.imagen2, self.imagen3], [self.imagen4, self.imagen5, self.imagen6]]
 		self.imagen_actual = 0
-		
+
 		self.imagen = self.imagenes[self.imagen_actual][0]
-		
+
 		self.rect = self.imagen.get_rect()
 		self.rect.x = pantalla.get_width() / 2 - self.imagen.get_width() / 2
 		self.rect.y = pantalla.get_height() - self.imagen.get_height()
 		self.velocidad = velocidad
 		self.puntos = 0
 		self.suenio = 0
-		
+
 		self.movimiento = False
 		self.orientacion = 0
-		
+
 		self.t = 0
-		
+
 		self.u = 0
 
 	# Actualiza la posición del jugador
@@ -64,10 +64,10 @@ class Jugador(pygame.sprite.Sprite):
 		self.imagen = self.imagenes[self.orientacion][self.imagen_actual]
 		pantalla.blit(self.imagen, self.rect)
 
-	# Comprueba si hay colisión entre el jugador y los aliens
+	# Comprueba si hay colisión entre el jugador y las tazas
 	def colision_alien(self, lista_alien, pantalla):
 		rect_alien = (0, 0, 0, 0)
-		
+
 		for i in range(len(lista_alien)):
 			rect_alien = (lista_alien[i][0], lista_alien[i][1], 32, 32)
 			if self.rect.colliderect(rect_alien):
@@ -101,27 +101,27 @@ class Jugador(pygame.sprite.Sprite):
 			pantalla.blit(texto_perder, rect_texto)
 			pantalla.blit(texto_reiniciar, rect_texto_r)
 			pygame.display.flip()
-			
+
 			for evento in pygame.event.get():
 				if tecla[pygame.K_r]:
 					nueva_partida = True
 					self.rect.x = pantalla.get_width() / 2 - self.imagen.get_width() / 2
 					self.rect.y = pantalla.get_height() - self.imagen.get_height()
-					reset_aliens(lista_alien)
+					reset_tazas(lista_tazas)
 					self.puntos = 0
-					
+
 					nueva_partida = True
-					
+
 				if evento.type == pygame.QUIT or tecla[pygame.K_q]:
 					salir_del_programa()
-					
-	
+
+
 	def siguiente_imagen(self):
 		self.u += 1
-		
+
 		if self.u == 6:
 			self.imagen_actual += 1
 			self.u = 0
-		
+
 		if self.imagen_actual > (len(self.imagenes)):
 			self.imagen_actual = 0
