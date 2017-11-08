@@ -69,6 +69,11 @@ proyectiles = Proyectiles(imagen_proyectil, velocidad_proyectil)
 iniciar_aliens(cant_alien)
 #pygame.mixer.music.play(10)
 
+#######################
+# Obstaculo gato
+
+gato = Obstaculo(pantalla)
+
 # Bucle principal del juego
 def jugar(cant_alien, nombre):
 
@@ -183,6 +188,10 @@ def jugar(cant_alien, nombre):
 		if otro_contador == 10 and jugador1.t == 1:
 			jugador1.t = 0
 			otro_contador = 0
+		#########################################
+		
+		gato.dibujar(pantalla)
+		gato.actualizar_pos(pantalla)
 		
 		# Actualiza la posición x,y del jugador y lo dibuja en pantalla
 		jugador1.actualizar_pos(velocidad, teclas, pantalla)

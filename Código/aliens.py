@@ -141,3 +141,71 @@ def colision_obstaculos(jugador, imagen, pantalla):
 				reset_aliens(lista_alien)
 				reset_obstaculos(lista_obstaculos)
 				jugador.puntos = 0
+				
+
+
+#################################################
+
+
+class Obstaculo(pygame.sprite.Sprite):
+
+	def __init__(self, pantalla):
+		super().__init__()
+
+		self.imagen1 = pygame.image.load("Imagenes/Obstaculos/gato_d1.png")
+		self.imagen2 = pygame.image.load("Imagenes/Obstaculos/gato_d2.png")
+		self.imagen3 = pygame.image.load("Imagenes/Obstaculos/gato_d3.png")
+		self.imagen4 = pygame.image.load("Imagenes/Obstaculos/gato_i1.png")
+		self.imagen5 = pygame.image.load("Imagenes/Obstaculos/gato_i2.png")
+		self.imagen6 = pygame.image.load("Imagenes/Obstaculos/gato_i3.png")
+		
+		self.imagenes = [[self.imagen1, self.imagen2, self.imagen3], [self.imagen4, self.imagen5, self.imagen6]]
+		self.imagen_actual = 0
+		
+		self.imagen = self.imagenes[self.imagen_actual][0]
+		
+		self.rect = self.imagen.get_rect()
+		self.rect.x = 0
+		self.rect.y = 400
+		self.velocidad = random.randrange(1, 3)
+		
+		self.movimiento = False
+		self.orientacion = 0
+		
+		self.t = 0
+		
+		self.u = 0
+
+	# Actualiza la posición
+	def actualizar_pos(self, pantalla):
+
+		if self.rect.x < (pantalla.get_width() - self.imagen.get_width()) and self.t == 0:
+			self.rect.x += self.velocidad
+		if self.rect.x >= pantalla.get_width() - self.imagen.get_width():
+			self.t = 1
+			self.orientacion = 1
+					
+		if self.rect.x > 0 and self.t == 1:
+			self.rect.x -= self.velocidad
+		if self.rect.x <= 0:
+			self.t = 0
+			self.orientacion = 0
+	
+		self.siguiente_imagen()
+
+			
+
+	# Imprime en pantalla la imagen
+	def dibujar(self, pantalla):
+		self.imagen = self.imagenes[self.orientacion][self.imagen_actual]
+		pantalla.blit(self.imagen, self.rect)
+	
+	def siguiente_imagen(self):
+		self.u += 1
+		
+		if self.u == 6:
+			self.imagen_actual += 1
+			self.u = 0
+		
+		if self.imagen_actual > (len(self.imagenes)):
+			self.imagen_actual = 0
