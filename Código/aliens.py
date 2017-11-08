@@ -89,7 +89,7 @@ def reset_aliens(lista_alien):
 # Genera mas "enemigos"
 
 def obstaculos(imagen, pantalla):
-	x = random.randrange(0, pantalla.get_width() - imagen.get_width())
+	x = 0
 	y = pantalla.get_height() - imagen.get_height()
 	velocidad = random.randrange(2, 3)
 	direccion = random.randrange(0, 2)

@@ -39,7 +39,7 @@ class Jugador(pygame.sprite.Sprite):
 
 	# Actualiza la posición del jugador
 	def actualizar_pos(self, velocidad, teclas, pantalla):
-		if self.rect.y >= 0:
+		if self.rect.y >= 350:
 			if teclas[pygame.K_UP] or teclas[pygame.K_w]:
 				self.rect.y -= self.velocidad
 		if self.rect.y <= pantalla.get_height() - self.imagen.get_height():
