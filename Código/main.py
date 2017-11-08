@@ -17,9 +17,9 @@ AZUL = (0, 250, 255)
 
 # Pantalla
 pantalla = pygame.display.set_mode([800, 600])
-pygame.display.set_caption("Developer Vs. Java")
+pygame.display.set_caption("Developer Vs. Development")
 pygame.mouse.set_visible(0)
-pygame.display.set_icon(pygame.image.load("Imagenes\Jugador\jug_der1.png"))
+pygame.display.set_icon(pygame.image.load("Imagenes\Fondo\icon.png"))
 
 
 # Fuentes
@@ -54,8 +54,6 @@ rect_alien = imagen_alien.get_rect()
 imagen_bed = pygame.image.load("Imagenes/Obstaculos/bed.png")
 imagen_bed.set_colorkey(BLANCO)
 
-imagen_dog = pygame.image.load("Imagenes/Obstaculos/dog.png")
-
 imagen_clock = pygame.image.load("Imagenes/Obstaculos/clock.png")
 
 # Sonidos
@@ -67,7 +65,7 @@ estrellas = Estrellas(pantalla)
 jugador1 = Jugador(velocidad, pantalla, 0, suenio)
 proyectiles = Proyectiles(imagen_proyectil, velocidad_proyectil)
 iniciar_aliens(cant_alien)
-#pygame.mixer.music.play(10)
+pygame.mixer.music.play(10)
 
 #######################
 # Obstaculo gato
@@ -78,7 +76,7 @@ gato = Obstaculo(pantalla)
 def jugar(cant_alien, nombre):
 
 	hecho = False
-	
+
 	otro_contador = 0
 	ciclos = 0
 	cantMov = 0
@@ -94,9 +92,9 @@ def jugar(cant_alien, nombre):
 		# Borra la pantalla
 		pantalla.fill(NEGRO)
 		pantalla.blit(fondo_juego, (0, 0))
-		
+
 		jugador1.movimiento = False
-		
+
 		# Busca teclas presionadas
 		teclas = pygame.key.get_pressed()
 		for evento in pygame.event.get():
@@ -119,20 +117,20 @@ def jugar(cant_alien, nombre):
 		if len(lista_alien) != 0:
 			for i in range(len(lista_alien)):
 				pantalla.blit(imagen_alien, lista_alien[i])
-		
+
 		cont2 += 1
 		if cont2 >= 250:
 			# Dibuja los obstáculos en pantalla
 			if len(lista_obstaculos) != 0:
 				for i in range(len(lista_obstaculos)):
 					pantalla.blit(imagen_bed, (lista_obstaculos[i][0], lista_obstaculos[i][1]))
-			
+
 			# Colision con obstaculos
 			colision_obstaculos(jugador1, imagen_bed, pantalla)
-			
+
 			# Actualiza posicion obstaculos
 			mover_obstaculos(imagen_bed, pantalla)
-			
+
 			if cont2 == 1000:
 				cont2 = 0
 				for i in range(len(lista_obstaculos)):
@@ -179,7 +177,7 @@ def jugar(cant_alien, nombre):
 		if cont == 120:
 			mover_alien_y(lista_alien)
 			cont = 0
-		
+
 		#########################################
 		otro_contador += 1
 		if otro_contador == 10 and jugador1.t == 0:
@@ -189,10 +187,10 @@ def jugar(cant_alien, nombre):
 			jugador1.t = 0
 			otro_contador = 0
 		#########################################
-		
+
 		gato.dibujar(pantalla)
 		gato.actualizar_pos(pantalla)
-		
+
 		# Actualiza la posición x,y del jugador y lo dibuja en pantalla
 		jugador1.actualizar_pos(velocidad, teclas, pantalla)
 		jugador1.dibujar(pantalla)
@@ -204,13 +202,13 @@ def jugar(cant_alien, nombre):
 		suenio_jugador = fuente2.render("Sueño: "+ str(jugador1.suenio), 1, (BLANCO))
 		pantalla.blit(suenio_jugador, (600, 0))
 		pantalla.blit(nombre_puntos, (0, 0))
-		
+
 		# Segundos de juego
-		segundos = pygame.time.get_ticks()/1000		
+		segundos = pygame.time.get_ticks()/1000
 		segundos = str(segundos)
-		contador = fuente2.render("Tiempo transcurrido: " + segundos, 1, (BLANCO))		
+		contador = fuente2.render("Tiempo transcurrido: " + segundos, 1, (BLANCO))
 		pantalla.blit(contador, (250, 0))
-		
+
 		# Imprime en pantalla todos los gráficos
 		pygame.display.flip()
 
