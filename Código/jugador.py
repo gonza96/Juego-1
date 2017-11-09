@@ -24,6 +24,8 @@ class Jugador(pygame.sprite.Sprite):
 		self.imagen = self.imagenes[self.imagen_actual][0]
 
 		self.rect = self.imagen.get_rect()
+		self.rect.width = self.rect.width - 10
+		self.rect.height = self.rect.height - 50
 		self.rect.x = pantalla.get_width() / 2 - self.imagen.get_width() / 2
 		self.rect.y = pantalla.get_height() - self.imagen.get_height()
 		self.velocidad = velocidad
@@ -98,6 +100,7 @@ class Jugador(pygame.sprite.Sprite):
 
 		while not nueva_partida:
 			tecla = pygame.key.get_pressed()
+			pantalla.blit(self.imagen, self.rect)
 			pantalla.blit(texto_perder, rect_texto)
 			pantalla.blit(texto_reiniciar, rect_texto_r)
 			pygame.display.flip()

@@ -209,3 +209,7 @@ class Obstaculo(pygame.sprite.Sprite):
 
 		if self.imagen_actual > (len(self.imagenes)):
 			self.imagen_actual = 0
+			
+	def colision(self, jugador, pantalla):
+		if self.rect.colliderect(jugador):
+			jugador.perder(pantalla)

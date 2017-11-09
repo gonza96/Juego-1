@@ -54,6 +54,13 @@ rect_alien = imagen_alien.get_rect()
 imagen_bed = pygame.image.load("Imagenes/Obstaculos/bed.png")
 imagen_bed.set_colorkey(BLANCO)
 
+imagen_reloj = pygame.image.load("Imagenes/Obstaculos/clock.png")
+reloj_i = pygame.sprite.Sprite()
+reloj_i.image = imagen_reloj
+reloj_i.rect = imagen_reloj.get_rect()
+reloj_i.rect.x = 300
+reloj_i.rect.y = 500
+
 imagen_clock = pygame.image.load("Imagenes/Obstaculos/clock.png")
 
 # Sonidos
@@ -100,10 +107,15 @@ def jugar(cant_alien, nombre):
 		for evento in pygame.event.get():
 			if evento.type == pygame.QUIT or teclas[pygame.K_q]:
 				hecho = True
-			if evento.type == pygame.MOUSEBUTTONDOWN or teclas[pygame.K_f]:
+			if teclas[pygame.K_f]:
 				sonido_disparo.play()
 				pos_disparo = (jugador1.rect.x + (jugador1.imagen.get_width() / 2) - (proyectiles.image.get_width() / 2))
 				proyectiles.nuevo_disparo(pos_disparo, jugador1.rect.y)
+			if evento.type == pygame.MOUSEBUTTONDOWN:
+				if reloj_i.rect.colliderect(jugador1.rect):
+					reloj_i.rect.top = 10000
+					reloj_i.rect.left = 10000
+			
 			if evento.type == pygame.KEYUP:
 				jugador1.movimiento = False
 				jugador1.imagen_actual = 0
@@ -190,7 +202,13 @@ def jugar(cant_alien, nombre):
 
 		gato.dibujar(pantalla)
 		gato.actualizar_pos(pantalla)
+		gato.colision(jugador1, pantalla)
+		#########################################
 
+		pantalla.blit(imagen_reloj, reloj_i.rect)
+		
+		
+		
 		# Actualiza la posición x,y del jugador y lo dibuja en pantalla
 		jugador1.actualizar_pos(velocidad, teclas, pantalla)
 		jugador1.dibujar(pantalla)
