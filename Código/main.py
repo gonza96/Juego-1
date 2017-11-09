@@ -65,7 +65,7 @@ estrellas = Estrellas(pantalla)
 jugador1 = Jugador(velocidad, pantalla, 0, suenio)
 proyectiles = Proyectiles(imagen_proyectil, velocidad_proyectil)
 iniciar_tazas(cant_alien)
-pygame.mixer.music.play(10)
+#pygame.mixer.music.play(10)
 
 #######################
 # Obstaculo gato
@@ -114,9 +114,9 @@ def jugar(cant_alien, nombre):
 				pantalla.blit(imagen_proyectil, lista_proyectil[i])
 
 		# Dibuja en pantalla los tazas
-		if len(lista_alien) != 0:
-			for i in range(len(lista_alien)):
-				pantalla.blit(imagen_alien, lista_alien[i])
+		if len(lista_tazas) != 0:
+			for i in range(len(lista_tazas)):
+				pantalla.blit(imagen_alien, lista_tazas[i])
 
 		cont2 += 1
 		if cont2 >= 250:
@@ -139,9 +139,9 @@ def jugar(cant_alien, nombre):
 
 		# Llamado a la función de colisiones, verifica cantidad de tazas en pantalla
 		# para ver si alguno fue eliminado
-		cant_alien_visible1 = len(lista_alien)
-		Colisiones(lista_alien, lista_proyectil, ancho_imagen)
-		cant_alien_visible2 = len(lista_alien)
+		cant_alien_visible1 = len(lista_tazas)
+		Colisiones(lista_tazas, lista_proyectil, ancho_imagen)
+		cant_alien_visible2 = len(lista_tazas)
 
 		# Si se elimino un enemigo, suma 50 puntos
 		if(cant_alien_visible2 < cant_alien_visible1):
@@ -155,19 +155,19 @@ def jugar(cant_alien, nombre):
 		proyectiles.mover_proyectil(largo_lista_proy)
 
 		# Si se destruyen todos los tazas agrega más
-		if len(lista_alien) == 0:
+		if len(lista_tazas) == 0:
 			iniciar_tazas(cant_alien)
 
 		# Llamado a la función para mover los tazas
 		if ciclos == 0:
-			mover_alien(lista_alien, ciclos, pantalla)
+			mover_alien(lista_tazas, ciclos, pantalla)
 			cantMov += 1
 			if cantMov == 50:
 				cantMov = 0
 				ciclos = 1
 
 		if ciclos == 1:
-			mover_alien(lista_alien, ciclos, pantalla)
+			mover_alien(lista_tazas, ciclos, pantalla)
 			cantMov += 1
 			if cantMov == 50:
 				cantMov = 0
@@ -175,7 +175,7 @@ def jugar(cant_alien, nombre):
 
 		cont += 1
 		if cont == 120:
-			mover_alien_y(lista_alien)
+			mover_alien_y(lista_tazas)
 			cont = 0
 
 		#########################################
@@ -194,7 +194,7 @@ def jugar(cant_alien, nombre):
 		# Actualiza la posición x,y del jugador y lo dibuja en pantalla
 		jugador1.actualizar_pos(velocidad, teclas, pantalla)
 		jugador1.dibujar(pantalla)
-		jugador1.colision_alien(lista_alien, pantalla)
+		jugador1.colision_alien(lista_tazas, pantalla)
 
 		# Nombre y puntuación en pantalla
 		nombre = "Jugador"

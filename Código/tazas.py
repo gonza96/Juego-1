@@ -2,44 +2,44 @@ from main import *
 import pygame
 import random
 
-lista_alien = []
+lista_tazas = []
 lista_obstaculos = []
 
 ROJO = (255, 0, 0)
 
 # Función para mover las tazas en el eje x
-def mover_alien(lista_alien, ciclos, pantalla):
+def mover_alien(lista_tazas, ciclos, pantalla):
 
-	if len(lista_alien) > 0:
-		for i in range(len(lista_alien)):
+	if len(lista_tazas) > 0:
+		for i in range(len(lista_tazas)):
 			if ciclos == 1:
-				if(lista_alien[i][0] > 32):
-					lista_alien[i][0] -= 1
+				if(lista_tazas[i][0] > 32):
+					lista_tazas[i][0] -= 1
 			if ciclos == 0:
-				if(lista_alien[i][0] < pantalla.get_width() - 32):
-					lista_alien[i][0] += 1
-				if(lista_alien[i][0] >= pantalla.get_width() - 32):
-					lista_alien[i][0] = 0
+				if(lista_tazas[i][0] < pantalla.get_width() - 32):
+					lista_tazas[i][0] += 1
+				if(lista_tazas[i][0] >= pantalla.get_width() - 32):
+					lista_tazas[i][0] = 0
 
 
 # Función para mover las tazas hacia el jugador
-def mover_alien_y(lista_alien):
-	if len(lista_alien) > 0:
-		for i in range(len(lista_alien)):
-			lista_alien[i][1] += 3
+def mover_alien_y(lista_tazas):
+	if len(lista_tazas) > 0:
+		for i in range(len(lista_tazas)):
+			lista_tazas[i][1] += 3
 
 # Coprueba si hay colisiones entre los proyectiles y las tazas
-def Colisiones(lista_alien, lista_proyectil, ancho_imagen):
+def Colisiones(lista_tazas, lista_proyectil, ancho_imagen):
 
 	borro = False
 
-	if len(lista_alien) != 0 and len(lista_proyectil) != 0:
-		for i in range (len(lista_alien)):
+	if len(lista_tazas) != 0 and len(lista_proyectil) != 0:
+		for i in range (len(lista_tazas)):
 			s = 0
 			while s < ancho_imagen and not borro:
 				for j in range (len(lista_proyectil)):
-					if lista_alien[i][0] + s == lista_proyectil[j][0] and lista_proyectil[j][1] <= lista_alien[i][1] :
-						del lista_alien[i]
+					if lista_tazas[i][0] + s == lista_proyectil[j][0] and lista_proyectil[j][1] <= lista_tazas[i][1] :
+						del lista_tazas[i]
 						del lista_proyectil[j]
 						borro = True
 						break
@@ -60,18 +60,18 @@ def iniciar_tazas(cant_alien):
 		if cont!= 0:
 			s += 1
 		cont += 1
-		lista_alien.append([alien_x, alien_y])
+		lista_tazas.append([alien_x, alien_y])
 
 # Resetea la lista de las tazas
-def reset_tazas(lista_alien):
+def reset_tazas(lista_tazas):
 	s = 0
 	cont = 0
 	y = 25
 
-	if(len(lista_alien)!=73):
+	if(len(lista_tazas)!=73):
 	# Completa la lista de tazas
-		for i in range(73 - len(lista_alien)):
-			lista_alien.append([0, 0])
+		for i in range(73 - len(lista_tazas)):
+			lista_tazas.append([0, 0])
 
 	# Posiciona las tazas
 	for i in range(73):
@@ -84,7 +84,7 @@ def reset_tazas(lista_alien):
 		if cont!= 0:
 			s += 1
 		cont += 1
-		lista_alien[i] = ([alien_x, alien_y])
+		lista_tazas[i] = ([alien_x, alien_y])
 
 # Genera mas "enemigos"
 
@@ -138,7 +138,7 @@ def colision_obstaculos(jugador, imagen, pantalla):
 
 				jugador.rect.x = pantalla.get_width() / 2 - jugador.imagen.get_width() / 2
 				jugador.rect.y = pantalla.get_height() - jugador.imagen.get_height()
-				reset_tazas(lista_alien)
+				reset_tazas(lista_tazas)
 				reset_obstaculos(lista_obstaculos)
 				jugador.puntos = 0
 
